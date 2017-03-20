@@ -1,8 +1,8 @@
 <?php
 
-namespace Picqer\BolPlazaClient;
+namespace Arjanhulst\BolPlazaClient;
 
-use Picqer\BolPlazaClient\Entities\BaseModel;
+use Arjanhulst\BolPlazaClient\Entities\BaseModel;
 use SimpleXMLElement;
 
 class BolPlazaDataParser

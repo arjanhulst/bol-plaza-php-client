@@ -1,21 +1,21 @@
 <?php
 
-namespace Picqer\BolPlazaClient;
+namespace Arjanhulst\BolPlazaClient;
 
-use Picqer\BolPlazaClient\Entities\BolPlazaReturnItem;
-use Picqer\BolPlazaClient\Entities\BolPlazaReturnItemStatusUpdate;
-use Picqer\BolPlazaClient\Entities\BolPlazaProcessStatus;
-use Picqer\BolPlazaClient\Entities\BolPlazaOrderItem;
-use Picqer\BolPlazaClient\Entities\BolPlazaCancellation;
-use Picqer\BolPlazaClient\Entities\BolPlazaOfferFile;
-use Picqer\BolPlazaClient\Entities\BolPlazaShipment;
-use Picqer\BolPlazaClient\Entities\BolPlazaChangeTransportRequest;
-use Picqer\BolPlazaClient\Entities\BolPlazaOfferCreate;
-use Picqer\BolPlazaClient\Entities\BolPlazaOfferUpdate;
-use Picqer\BolPlazaClient\Entities\BolPlazaShipmentRequest;
-use Picqer\BolPlazaClient\Entities\BolPlazaStockUpdate;
-use Picqer\BolPlazaClient\Exceptions\BolPlazaClientException;
-use Picqer\BolPlazaClient\Exceptions\BolPlazaClientRateLimitException;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaReturnItem;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaReturnItemStatusUpdate;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaProcessStatus;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaOrderItem;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaCancellation;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferFile;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaShipment;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaChangeTransportRequest;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferCreate;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferUpdate;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaShipmentRequest;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaStockUpdate;
+use Arjanhulst\BolPlazaClient\Exceptions\BolPlazaClientException;
+use Arjanhulst\BolPlazaClient\Exceptions\BolPlazaClientRateLimitException;
 
 class BolPlazaClient
 {

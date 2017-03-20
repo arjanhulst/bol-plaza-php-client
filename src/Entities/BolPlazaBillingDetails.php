@@ -1,6 +1,6 @@
 <?php
 
-namespace Picqer\BolPlazaClient\Entities;
+namespace Arjanhulst\BolPlazaClient\Entities;
 
 class BolPlazaBillingDetails extends BolPlazaShipmentDetails {
 

@@ -38,7 +38,7 @@ class BolPlazaDataParser
      */
     public static function createEntityFromResponse($entity, $xml)
     {
-        $entity = 'Picqer\\BolPlazaClient\\Entities\\' . $entity;
+        $entity = 'Arjanhulst\\BolPlazaClient\\Entities\\' . $entity;
         if ($xml instanceof SimpleXMLElement) {
             $xmlElement = $xml;
         } else {

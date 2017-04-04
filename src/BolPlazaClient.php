@@ -22,7 +22,7 @@ class BolPlazaClient
     const URL_LIVE = 'https://plazaapi.bol.com';
     const URL_TEST = 'https://test-plazaapi.bol.com';
     const API_VERSION = 'v2';
-    const OFFER_API_VERSION = 'v1';
+    const OFFER_API_VERSION = 'v2';
 
     private $testMode = false;
     private $skipSslVerification = false;
@@ -193,6 +193,19 @@ class BolPlazaClient
         $url = '/offers/' . self::OFFER_API_VERSION . '/' . $offerId;
         $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerCreate);
         $apiResult = $this->makeRequest('POST', $url, $xmlData);
+        return $apiResult;
+    }
+
+    /**
+     * Upsert an offer
+     * @param BolPlazaOfferCreate $offerCreate
+     * @return $apiResult
+     */
+    public function upsertOffer(Entities\BolPlazaOfferCreate $offerCreate)
+    {
+        $url = '/offers/' . self::OFFER_API_VERSION . '/';
+        $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerCreate);
+        $apiResult = $this->makeRequest('PUT', $url, $xmlData);
         return $apiResult;
     }
 

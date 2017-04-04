@@ -27,6 +27,8 @@ class BolPlazaOfferCreate extends BaseModel {
         'QuantityInStock',
         'Publish',
         'ReferenceCode',
-        'Description'
+        'Description',
+        'FulfillmentMethod',
+        'Title'
     ];
 }

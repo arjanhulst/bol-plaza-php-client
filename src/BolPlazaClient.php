@@ -10,8 +10,8 @@ use Arjanhulst\BolPlazaClient\Entities\BolPlazaCancellation;
 use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferFile;
 use Arjanhulst\BolPlazaClient\Entities\BolPlazaShipment;
 use Arjanhulst\BolPlazaClient\Entities\BolPlazaChangeTransportRequest;
-use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferCreate;
-use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferUpdate;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaOfferUpsert;
+use Arjanhulst\BolPlazaClient\Entities\BolPlazaDeleteBulkRequest;
 use Arjanhulst\BolPlazaClient\Entities\BolPlazaShipmentRequest;
 use Arjanhulst\BolPlazaClient\Entities\BolPlazaStockUpdate;
 use Arjanhulst\BolPlazaClient\Exceptions\BolPlazaClientException;
@@ -22,7 +22,6 @@ class BolPlazaClient
     const URL_LIVE = 'https://plazaapi.bol.com';
     const URL_TEST = 'https://test-plazaapi.bol.com';
     const API_VERSION = 'v2';
-    const OFFER_API_VERSION = 'v2';
 
     private $testMode = false;
     private $skipSslVerification = false;
@@ -184,41 +183,29 @@ class BolPlazaClient
 
     /**
      * Create an offer
-     * @param string $offerId
-     * @param BolPlazaOfferCreate $offerCreate
-     * @return
+     * @param string $ean
+     * @param string|bool $condition
+     * @return string $apiResult
      */
-    public function createOffer($offerId, Entities\BolPlazaOfferCreate $offerCreate)
+    public function getOffer($ean, $condition = false)
     {
-        $url = '/offers/' . self::OFFER_API_VERSION . '/' . $offerId;
-        $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerCreate);
-        $apiResult = $this->makeRequest('POST', $url, $xmlData);
-        return $apiResult;
+        $url = '/offers/' . self::API_VERSION . '/' . $ean;
+        if($condition) $url .='?condition='.$condition;
+        $apiResult = $this->makeRequest('GET', $url);
+
+        $offer = BolPlazaDataParser::createCollectionFromResponse('BolPlazaRetailerOffer', $apiResult,'RetailerOffer');
+        return $offer;
     }
 
     /**
      * Upsert an offer
-     * @param BolPlazaOfferCreate $offerCreate
-     * @return $apiResult
+     * @param BolPlazaOfferUpsert $offerUpsert
+     * @return string|bool $apiResult
      */
-    public function upsertOffer(Entities\BolPlazaOfferCreate $offerCreate)
+    public function upsertOffer(Entities\BolPlazaOfferUpsert $offerUpsert)
     {
-        $url = '/offers/' . self::OFFER_API_VERSION . '/';
-        $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerCreate);
-        $apiResult = $this->makeRequest('PUT', $url, $xmlData);
-        return $apiResult;
-    }
-
-    /**
-     * Update an offer
-     * @param string $offerId
-     * @param BolPlazaOfferUpdate $offerUpdate
-     * @return
-     */
-    public function updateOffer($offerId, Entities\BolPlazaOfferUpdate $offerUpdate)
-    {
-        $url = '/offers/' . self::OFFER_API_VERSION . '/' . $offerId;
-        $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerUpdate);
+        $url = '/offers/' . self::API_VERSION;
+        $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerUpsert);
         $apiResult = $this->makeRequest('PUT', $url, $xmlData);
         return $apiResult;
     }
@@ -227,11 +214,11 @@ class BolPlazaClient
      * Update an offer stock
      * @param string $offerId
      * @param BolPlazaStockUpdate $stockUpdate
-     * @return
+     * @return string $apiResult
      */
     public function updateOfferStock($offerId, Entities\BolPlazaStockUpdate $stockUpdate)
     {
-        $url = '/offers/' . self::OFFER_API_VERSION . '/' . $offerId . '/stock';
+        $url = '/offers/' . self::API_VERSION . '/' . $offerId . '/stock';
         $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($stockUpdate);
         $apiResult = $this->makeRequest('PUT', $url, $xmlData);
         return $apiResult;
@@ -239,13 +226,14 @@ class BolPlazaClient
 
     /**
      * Delete an offer
-     * @param string $offerId
-     * @return
+     * @param BolPlazaDeleteBulkRequest $offerDelete
+     * @return string $apiResult
      */
-    public function deleteOffer($offerId)
+    public function deleteOffer(Entities\BolPlazaDeleteBulkRequest $offerDelete)
     {
-        $url = '/offers/' . self::OFFER_API_VERSION . '/' . $offerId;
-        $apiResult = $this->makeRequest('DELETE', $url);
+        $url = '/offers/' . self::API_VERSION;
+        $xmlData = BolPlazaDataParser::createOfferXmlFromEntity($offerDelete);
+        $apiResult = $this->makeRequest('DELETE', $url,$xmlData);
         return $apiResult;
     }
 
@@ -256,7 +244,7 @@ class BolPlazaClient
      */
     public function getOwnOffers($filter = '')
     {
-      $url = '/offers/' . self::OFFER_API_VERSION . '/export';
+      $url = '/offers/' . self::API_VERSION . '/export';
       $data = [];
       if(!empty($filter)) {
           $data['filter'] = $filter;
@@ -327,7 +315,7 @@ class BolPlazaClient
 
         $result = curl_exec($ch);
         $headerInfo = curl_getinfo($ch);
-
+        var_dump($ch,$headerInfo);
         $this->checkForErrors($ch, $headerInfo, $result);
 
         curl_close($ch);

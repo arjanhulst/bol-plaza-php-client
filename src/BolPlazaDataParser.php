@@ -12,14 +12,16 @@ class BolPlazaDataParser
      *
      * @param string $entity
      * @param string|SimpleXMLElement $xmlString
+     * @param string|bool $xpath
      * @return array
      */
-    public static function createCollectionFromResponse($entity, $xmlString)
+    public static function createCollectionFromResponse($entity, $xmlString, $xpath=false)
     {
+
         if ($xmlString instanceof SimpleXMLElement) {
             $xmlElements = $xmlString;
         } else {
-            $xmlElements = self::parseXmlResponse($xmlString);
+            $xmlElements = self::parseXmlResponse($xmlString,'',$xpath);
         }
 
         $collection = [];
@@ -83,14 +85,20 @@ class BolPlazaDataParser
      * @param array $namespaces
      * @return SimpleXMLElement
      */
-    public static function parseXmlResponse($xmlString, $namespace = '')
+    public static function  parseXmlResponse($xmlString, $namespace = '', $xpath = '')
     {
         $document = new SimpleXMLElement($xmlString);
         if(!empty($namespace)) {
           $namespaces = $document->getNamespaces(true);
           return $document->children($namespaces[$namespace]);
         }
-        return $document->children();
+        if($xpath !='')
+        {
+            $document->registerXPathNamespace('c',$document->getNamespaces()['']);
+            return $document->xpath('//c:'.$xpath);
+        } else {
+            return $document->children();
+        }
     }
 
     /**
@@ -165,7 +173,7 @@ class BolPlazaDataParser
      */
     public static function createOfferXmlFromEntity($entity)
     {
-        return self::createNamespacedXmlFromEntity('http://plazaapi.bol.com/offers/xsd/api-1.0.xsd', $entity);
+        return self::createNamespacedXmlFromEntity('http://plazaapi.bol.com/offers/xsd/api-2.0.xsd', $entity);
     }
 
     /**

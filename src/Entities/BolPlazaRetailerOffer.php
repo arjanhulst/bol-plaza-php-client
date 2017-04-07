@@ -3,7 +3,7 @@
 namespace Arjanhulst\BolPlazaClient\Entities;
 
 /**
- * Class BolPlazaOfferCreate
+ * Class BolPlazaRetailerOffer
  * @package Picqer\BolPlazaClient\Entities
  *
  * @property string $EAN
@@ -15,9 +15,9 @@ namespace Arjanhulst\BolPlazaClient\Entities;
  * @property string $ReferenceCode
  * @property string $Description
  */
-class BolPlazaOfferCreate extends BaseModel {
+class BolPlazaRetailerOffer extends BaseModel {
 
-    protected $xmlEntityName = 'OfferCreate';
+    protected $xmlEntityName = 'RetailerOffer';
 
     protected $attributes = [
         'EAN',

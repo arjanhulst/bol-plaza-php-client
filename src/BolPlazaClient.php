@@ -315,7 +315,6 @@ class BolPlazaClient
 
         $result = curl_exec($ch);
         $headerInfo = curl_getinfo($ch);
-        var_dump($ch,$headerInfo);
         $this->checkForErrors($ch, $headerInfo, $result);
 
         curl_close($ch);

@@ -19,16 +19,10 @@ class BolPlazaOfferUpsert extends BaseModel {
 
     protected $xmlEntityName = 'UpsertRequest';
 
-    protected $attributes = [
-        'EAN',
-        'Condition',
-        'Price',
-        'DeliveryCode',
-        'QuantityInStock',
-        'Publish',
-        'ReferenceCode',
-        'Description',
-        'FulfillmentMethod',
-        'Title'
+    protected $childEntities = [
+        'RetailerOffers' => [
+            'childName' => 'RetailerOffer',
+            'entityClass' => 'RetailerOffer'
+        ]
     ];
 }

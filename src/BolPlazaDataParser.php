@@ -173,7 +173,7 @@ class BolPlazaDataParser
      */
     public static function createOfferXmlFromEntity($entity)
     {
-        return self::createNamespacedXmlFromEntity('http://plazaapi.bol.com/offers/xsd/api-2.0.xsd', $entity);
+        return self::createNamespacedXmlFromEntity('https://test-plazaapi.bol.com/offers/xsd/api-2.0.xsd', $entity);
     }
 
     /**

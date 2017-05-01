@@ -3,26 +3,16 @@
 namespace Arjanhulst\BolPlazaClient\Entities;
 
 /**
- * Class BolPlazaOfferCreate
+ * Class BolPlazaOfferUpsert
  * @package Picqer\BolPlazaClient\Entities
  *
- * @property string $EAN
- * @property string $Condition
- * @property string $Price
- * @property string $DeliveryCode
- * @property string $QuantityInStock
- * @property string $Publish
- * @property string $ReferenceCode
- * @property string $Description
+ * @property string $RetailerOffer
  */
 class BolPlazaOfferUpsert extends BaseModel {
 
     protected $xmlEntityName = 'UpsertRequest';
 
-    protected $childEntities = [
-        'RetailerOffers' => [
-            'childName' => 'RetailerOffer',
-            'entityClass' => 'RetailerOffer'
-        ]
+    protected $nestedEntities = [
+        'RetailerOffer' => 'BolPlazaRetailerOffer'
     ];
 }

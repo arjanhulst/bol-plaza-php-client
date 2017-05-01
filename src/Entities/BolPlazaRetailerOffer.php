@@ -12,6 +12,8 @@ namespace Arjanhulst\BolPlazaClient\Entities;
  * @property string $DeliveryCode
  * @property string $QuantityInStock
  * @property string $Publish
+ * @property string $FulfillmentMethod
+ * @property string $Title
  * @property string $ReferenceCode
  * @property string $Description
  */
